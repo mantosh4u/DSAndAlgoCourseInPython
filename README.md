@@ -21,4 +21,4 @@ Below is high level topics which has been covered in this course.
 12. Linear Programming
 
 
-**Disclaimar**: Of course any errors in the implementation is my responsibility.
+**Disclaimer**: Of course, any errors in the implementation is my responsibility.
