@@ -34,7 +34,7 @@ def calculate_and_print_indegree_of_matrix(fvAMatrix):
         gVertexToIndegreeVal = {}
 
     for rowIndex in range(tvCols):
-        tvIndegreeVal = CommonGraph.indegreeValAMatrix(fvAMatrix, rowIndex)
+        tvIndegreeVal = CommonGraph.indegreeVal(fvAMatrix, rowIndex)
         # print(str(rowIndex) + ": " + str(tvIndegreeVal))
         gVertexToIndegreeVal[rowIndex] = tvIndegreeVal
 
@@ -61,7 +61,7 @@ def calculate_and_print_indegree_of_list(fvAList):
 
 
     for i in range(len(fvAList)):
-        tvCurrentIndexNeighbourList = fvAList[i]
+        tvCurrentIndexNeighbourList = CommonGraph.neighbours(fvAList, i)
         for aNeighbour in range(len(tvCurrentIndexNeighbourList)):
             # if present get current value and then increment by one.
             aNeighbourVertexIndexValue = tvCurrentIndexNeighbourList[aNeighbour]
@@ -72,7 +72,7 @@ def calculate_and_print_indegree_of_list(fvAList):
 
 
 
-def perform_toplogicalsorting_and_longest_path_of_matrix_or_list(fvAdjacency, fvType):
+def perform_toplogicalsorting_and_longest_path_of_matrix_or_list(fvAdjacency):
     """ perform_toplogicalsorting_and_longest_path_of_matrix_or_list"""
 
     global gVertexToIndegreeVal
@@ -105,10 +105,7 @@ def perform_toplogicalsorting_and_longest_path_of_matrix_or_list(fvAdjacency, fv
         #     tvLongestPathList[tvCurrProcessing] = 0
 
         tvNeighboursList = []
-        if(fvType == "matrix"):
-            tvNeighboursList = CommonGraph.neighboursAMatrix(fvAdjacency, tvCurrProcessing)
-        elif(fvType == "list"):
-            tvNeighboursList = CommonGraph.neighboursAList(fvAdjacency, tvCurrProcessing)
+        tvNeighboursList = CommonGraph.neighbours(fvAdjacency, tvCurrProcessing)
         
         for aNeighbour in tvNeighboursList:
             gVertexToIndegreeVal[aNeighbour] =  gVertexToIndegreeVal[aNeighbour] - 1
@@ -118,11 +115,8 @@ def perform_toplogicalsorting_and_longest_path_of_matrix_or_list(fvAdjacency, fv
             
             # Get max value in all incoming edges current longest distance
             tvIncomingEdgesList = []
-            if(fvType == "matrix"):
-                tvIncomingEdgesList = CommonGraph.incomingEdgesAMatrix(fvAdjacency, aNeighbour)
-            elif(fvType == "list"):
-                tvIncomingEdgesList = CommonGraph.incomingEdgesAlist(fvAdjacency, aNeighbour)
-
+            tvIncomingEdgesList = CommonGraph.incomingEdges(fvAdjacency, aNeighbour)
+            
             tvIncomingEdgesLongestDistanceList = []
             for edgeIndex in tvIncomingEdgesList:
                 tvIncomingEdgesLongestDistanceList.append(tvLongestPathList[edgeIndex])
@@ -157,7 +151,7 @@ for tvGraphNumber in tvGraphNumberList:
     # Topological Sorting Using Adjacency List
     tvAdjecenyList  = CommonGraph.create_graph_into_adjacency_list(tvGraphNumber)
     calculate_and_print_indegree_of_list(tvAdjecenyList)
-    tvOutput = perform_toplogicalsorting_and_longest_path_of_matrix_or_list(tvAdjecenyList, "list")
+    tvOutput = perform_toplogicalsorting_and_longest_path_of_matrix_or_list(tvAdjecenyList)
     tvTopologicalListSortList = tvOutput[0]
     tvLongestPathDic = tvOutput[1]
 
@@ -173,12 +167,13 @@ for tvGraphNumber in tvGraphNumberList:
 
 
 
+
 # print(" >> Adjacency List")
 # for index in range(len(tvAdjecenyList)):
-#     tvIncomingEdgesList = CommonGraph.incomingEdgesAlist(tvAdjecenyList, index)
+#     tvIncomingEdgesList = CommonGraph.incomingEdges(tvAdjecenyList, index)
 #     print("For Index: " + str(index) + ", IncomingEdge List is: " + str(tvIncomingEdgesList))
    
-#     tvNeighBoursList = CommonGraph.neighboursAList(tvAdjecenyList, index) 
+#     tvNeighBoursList = CommonGraph.neighbours(tvAdjecenyList, index) 
 #     print("For Index: " + str(index) + ", OutgoingEdge List is: " + str(tvNeighBoursList))
 # print(" << Adjacency List")
 
@@ -190,11 +185,15 @@ for tvGraphNumber in tvGraphNumberList:
 
 # print(" >> Adjacency Matrix")
 # for rowIndex in range(tvRows):
-#     tvIncomingEdgesList = CommonGraph.incomingEdgesAMatrix(tvAdjecenyMatrix, rowIndex)
+#     tvIncomingEdgesList = CommonGraph.incomingEdges(tvAdjecenyMatrix, rowIndex)
 #     print("For Index: " + str(rowIndex) + ", IncomingEdge List is: " + str(tvIncomingEdgesList))
    
-#     tvNeighBoursList = CommonGraph.neighboursAMatrix(tvAdjecenyMatrix, rowIndex) 
+#     tvNeighBoursList = CommonGraph.neighbours(tvAdjecenyMatrix, rowIndex) 
 #     print("For Index: " + str(rowIndex) + ", OutgoingEdge List is: " + str(tvNeighBoursList))
 # print(" << Adjacency Matrix")
 
 print("Completed Successfully")
+
+
+
+
