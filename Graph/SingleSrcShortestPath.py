@@ -30,16 +30,17 @@ def min_value_index(fvShortestDistanceList, fvVisitedList):
     tvSecondValueIndex = -1
 
     if(len(fvShortestDistanceList) > 0):
-        tvSecondValueIndex = 0
         tvSecondValue = fvShortestDistanceList[0]
 
-        for index in range(0, len(fvShortestDistanceList)):
+        for index in range(1, len(fvShortestDistanceList)):
             if(fvVisitedList[index] == True):
                 continue
             tvCurrentValue = fvShortestDistanceList[index]
             if(tvCurrentValue != 0):
-                if(tvCurrentValue <= tvSecondValue):
+                if( (tvCurrentValue <= tvSecondValue) or (tvSecondValue == 0) ):
                     tvSecondValueIndex = index
+                    tvSecondValue = tvCurrentValue
+
 
     return tvSecondValueIndex
 
