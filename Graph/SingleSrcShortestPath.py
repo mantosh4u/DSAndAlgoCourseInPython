@@ -23,6 +23,19 @@ def get_weightValue_of_matrixedge(fvAMatrix, fvFirstNode, fvSecondNode):
 
 
 
+def get_weightValue_of_listedge(fvAList, fvFirstNode, fvSecondNode):
+    """ get_weightValue_of_listedge """
+
+    tvWeightValue = 0
+    tvEdgeList = fvAList[fvFirstNode]
+    for (index, weight) in tvEdgeList:
+        if(fvSecondNode == index):
+            tvWeightValue = weight
+            break
+
+    return tvWeightValue
+
+
 
 def min_value_index(fvShortestDistanceList, fvVisitedList):
     """min_value_index from kind of unvisited index."""
@@ -100,31 +113,87 @@ def dijkstra_singlesource_shortestdistance(fvAMatrix, fvSourceNode):
 
 
 
+
+
+
+def dijkstra_singlesource_shortestdistance_adjaceny_list(fvAList, fvSourceNode):
+    """ dijkstra_singlesource_shortestdistance_adjaceny_list """
+
+    tvShortestDistanceList = []
+    tvVisitedList          = []
+
+    # Initialize all distance from 'fvSourceNode' is very very big number(999999).
+    for index in range(0, len(fvAList)):
+        tvShortestDistanceList.append(999999)
+        tvVisitedList.append(False)
+
+    # Now let's initialze the 'fvSourceNode' shortest distance is 0. Its so simple!!
+    tvShortestDistanceList[fvSourceNode] = 0
+    tvVisitedList[fvSourceNode] = True
+
+    tvNeighboursList = WeightedGraph.neighboursAList(fvAList, fvSourceNode)
+    for aNeighbour in tvNeighboursList:
+        tvWeightValue = get_weightValue_of_listedge(fvAList, fvSourceNode, aNeighbour)
+        tvShortestDistanceList[aNeighbour] = tvWeightValue
+
+
+    # Loop until we have some finite value in tvShortestDistanceList
+    while True:
+        tvMinDistanceValIndex = min_value_index(tvShortestDistanceList, tvVisitedList)
+        if(tvMinDistanceValIndex == -1):
+            break
+        else:
+            tvVisitedList[tvMinDistanceValIndex] = True
+            tvNeighboursList = WeightedGraph.neighboursAList(fvAList, tvMinDistanceValIndex)
+            for aNeighbour in tvNeighboursList:
+                tvWeightValue = get_weightValue_of_listedge(fvAList, tvMinDistanceValIndex, aNeighbour)
+                tvTotalWeightOfCurrentNeighbour = tvShortestDistanceList[tvMinDistanceValIndex] + tvWeightValue
+                if(tvTotalWeightOfCurrentNeighbour < tvShortestDistanceList[aNeighbour]):
+                    tvShortestDistanceList[aNeighbour] = tvTotalWeightOfCurrentNeighbour
+
+
+    return tvShortestDistanceList
+
+
+
+
+
+
+
+
 ###########################################################################################
 ######################################__main__#############################################
 ###########################################################################################
 
 
 tvGraphNumber = 1
+# tvSourceNode = 0
+tvSourceNode = 1
+
+
 tvAdjecenyMatrix  = WeightedGraph.create_graph_into_adjacency_matrix(tvGraphNumber)
-print(tvAdjecenyMatrix)
+# print(tvAdjecenyMatrix)
 
-tvSourceNode = 0
-tvshortestPathToAllNodesList = dijkstra_singlesource_shortestdistance(tvAdjecenyMatrix, tvSourceNode)
-print(tvshortestPathToAllNodesList)
-
+tvshortestPathToAllNodesAdjancenyMatrixList = dijkstra_singlesource_shortestdistance(tvAdjecenyMatrix, tvSourceNode)
+print(tvshortestPathToAllNodesAdjancenyMatrixList)
 
 # tvInDegreeEdgeList  = WeightedGraph.incomingEdgesAMatrix(tvAdjecenyMatrix, 4)
 # tvOutDegreeEdgeList = WeightedGraph.neighboursAMatrix(tvAdjecenyMatrix, 4)
 # print(tvInDegreeEdgeList, tvOutDegreeEdgeList)
 
-tvAdjecenyList  = WeightedGraph.create_graph_into_adjacency_list(tvGraphNumber)
-print(tvAdjecenyList)
 
+
+
+
+tvAdjecenyList  = WeightedGraph.create_graph_into_adjacency_list(tvGraphNumber)
+# print(tvAdjecenyList)
+
+tvshortestPathToAllNodesAdjancyListList = dijkstra_singlesource_shortestdistance_adjaceny_list(tvAdjecenyList, tvSourceNode)
+print(tvshortestPathToAllNodesAdjancyListList)
 
 # tvInDegreeEdgeList  = WeightedGraph.incomingEdgesAlist(tvAdjecenyList, 4)
 # tvOutDegreeEdgeList = WeightedGraph.neighboursAList(tvAdjecenyList, 4)
 # print(tvInDegreeEdgeList, tvOutDegreeEdgeList)
 
-
 print("Completed Sucessfully")
+
