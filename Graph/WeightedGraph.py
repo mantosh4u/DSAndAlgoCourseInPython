@@ -85,8 +85,8 @@ def create_adjacency_list_helper(fvVerticesCount, fvEdgeList):
 #     [(0, 0) (0, 0) (0, 0) (1, 70) (0, 0) (0, 0) (0, 0)]
 #     [(0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (0, 0)]
 #     [(0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (1, 50) (1, 5)]
-#     [(0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (1, 10)]
 #     [(0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (0, 0)]
+#     [(0, 0) (0, 0) (0, 0) (0, 0) (0, 0) (1, 10) (0, 0)]
 #  ]
 
 
@@ -98,8 +98,8 @@ def create_adjacency_list_helper(fvVerticesCount, fvEdgeList):
 # 2: [(3, 70)]
 # 3: []
 # 4: [(5, 50), (6, 5)]
-# 5: [(6, 10)]
-# 6: []
+# 5: []
+# 6: [(5, 10)]
 
 
 
@@ -117,8 +117,21 @@ def create_graph_into_adjacency_matrix_or_list_one(fvType):
                ((2,3),70),
             
                ((4,5),50), ((4,6),5),
-               ((5,6),10)
+
+               ((6,5),10)
                ]
+    
+    # # All edges with equal weights to see how Algorithms works. It works as expected.
+    # tvEdges = [((0,1),1), ((0,2),1),
+    #            ((1,2),1),  ((1,4),1),
+    #            ((2,3),1),
+            
+    #            ((4,5),1), ((4,6),1),
+
+    #            ((6,5),1)
+    #            ]
+    
+
     
     if(fvType == "matrix"):
         return create_adjacency_matrix_helper(tvVerticesCount, tvEdges)
