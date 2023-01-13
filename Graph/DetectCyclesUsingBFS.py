@@ -34,7 +34,7 @@ def bfs_startegy_for_adjacencyMatrix_connectivitycheck_helper(fvAMatrix, fV):
 
     while(not tvQueue.isEmpty()):
         tvCurrProcessing = tvQueue.delq()
-        tvNeighboursList = CommonGraph.neighboursAMatrix(fvAMatrix, tvCurrProcessing)
+        tvNeighboursList = CommonGraph.neighbours(fvAMatrix, tvCurrProcessing)
         for k in tvNeighboursList:
             if(gComponentNumber[k] == -1):
                 gComponentNumber[k] = gCurrentComponentNumber
