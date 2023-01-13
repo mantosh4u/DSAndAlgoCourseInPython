@@ -229,28 +229,6 @@ def incomingEdgesAMatrix(fvAMatrix, i):
 
 
 
-############################################################################################
-#################################### In-degree Calculation #################################
-############################################################################################
-def indegreeValAMatrix(fvAMatrix, i):
-    """ finding out the indegree from the given Adjacency Matrix and a particular vertex. 
-    Indegree basically denotes number of incoming edges to a particular vertex."""
-
-    return len(incomingEdgesAMatrix(fvAMatrix, i)) 
-
-
-
-############################################################################################
-#################################### Out-degree Calculation ################################
-############################################################################################
-def outdegreeValAMatrix(fvAMatrix, i):
-    """ finding out the outdegree from the given Adjacency Matrix and a particular vertex. 
-    outdegree basically denotes number of outgoing edges to a particular vertex. So it is
-    essentially the same as finding out neighbours of a given node."""
-
-    return len(neighboursAMatrix(fvAMatrix, i))    
-
-
 
 
 
@@ -310,24 +288,57 @@ def incomingEdgesAlist(fvAList, i):
 
 
 
-############################################################################################
-#################################### In-degree Calculation #################################
-############################################################################################
-def indegreeValAList(fvAList, i):
-    """ finding out the indegree from the given Adjacency Matrix and a particular vertex. 
-    Indegree basically denotes number of incoming edges to a particular vertex."""
-
-    return len(incomingEdgesAlist(fvAList, i)) 
 
 
 
 ############################################################################################
-#################################### Out-degree Calculation ################################
+#################### Common Utility For Adjancency Matrix & List############################
 ############################################################################################
-def outdegreeValAList(fvAList, i):
-    """ finding out the outdegree from the given Adjacency Matrix and a particular vertex. 
-    outdegree basically denotes number of outgoing edges to a particular vertex. So it is
-    essentially the same as finding out neighbours of a given node."""
 
-    return len(neighboursAList(fvAList, i))    
-    
+def neighbours(fvAInput, i):
+    """ Check out the type of 'fvAInput and then call appropriately. Neighbours means outgoing
+    edges from the given node index 'i' """
+
+    tvReturnList = []
+
+    if( isinstance(fvAInput, dict) == True):
+        tvReturnList = neighboursAList(fvAInput, i)
+    elif( isinstance(fvAInput, np.ndarray) == True):
+        tvReturnList = neighboursAMatrix(fvAInput, i) 
+    return tvReturnList
+
+
+
+
+def incomingEdges(fvAInput, i):
+    """ Check out the type of 'fvAInput and then call appropriately.incomingEdges means
+    incoming egdes to the given node index 'i' """
+
+    tvReturnList = []
+
+    if( isinstance(fvAInput, dict) == True):
+        tvReturnList = incomingEdgesAlist(fvAInput, i)
+    elif( isinstance(fvAInput, np.ndarray) == True):
+        tvReturnList = incomingEdgesAMatrix(fvAInput, i) 
+    return tvReturnList
+
+
+
+
+def outdegreeVal(fvAInput, i):
+    """ Outdegree value of the given node 'i'"""
+
+    tvLen = 0
+    tvLen = neighbours(fvAInput, i)
+    return tvLen
+
+
+
+
+def indegreeVal(fvAInput, i):
+    """ Indegree value of the given node 'i'"""
+
+    tvLen = 0
+    tvLen = incomingEdges(fvAInput, i)
+    return tvLen
+
