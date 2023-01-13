@@ -44,7 +44,7 @@ def dfs_startegy_for_adjacencyMatrix(fvAMatrix, fV):
 
     while(not tvStack.isEmpty()):
         tvCurrProcessing = tvStack.top()
-        tvNeighboursList = CommonGraph.neighboursAMatrix(fvAMatrix, tvCurrProcessing)
+        tvNeighboursList = CommonGraph.neighbours(fvAMatrix, tvCurrProcessing)
         if(len(tvNeighboursList) > 0):
             tvWhetherPushed = False
             for k in tvNeighboursList:
