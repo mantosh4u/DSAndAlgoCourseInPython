@@ -5,7 +5,6 @@ import time
 
 
 
-
 # Total maximum process
 # gMaxProcessCount = 15625
 
@@ -42,10 +41,13 @@ def generate_random_array(fvListLength = 10, startValue = 2, EndValue = 30):
 
 def binary_search_for_finding_index(fvArray, fvStartIndex, fvEndIndex, fvValue):
     """This is the most practical way to search a value in input list. However the
-    pre-condition of this is that it required input list to be sorted. """
+    pre-condition of this is that it required input list to be sorted. This needs to
+    be maintained by this 2D array. """
 
     tvMiddleIndex = 0
 
+    # This seems to be buggy as I need to return the appropriate position of values.
+    # TODO: Require some thoughts.
     if(fvStartIndex == fvEndIndex):
         if(fvStartIndex == len(fvArray)):
             fvStartIndex = fvStartIndex -1
@@ -134,7 +136,7 @@ def priority_queue_using_2d_initialize():
         # now update the length.
         tvCurrentLength = gRowIndexToLengthMap[tvRowIndexForUse]
         tvUpdatedLength = tvCurrentLength + 1
-        gRowIndexToLengthMap[tvRowIndexForUse] = tvUpdatedLength
+        gRowIndexToLengthMap[tvRowIndexForUse] = gRowIndexToLengthMap[tvRowIndexForUse] + 1
 
         # now we need to scan through entire row to find the appropriate position and shift if required.
         gProcessGrid[tvRowIndexForUse, tvColumnIndex] = tvInsertValue
@@ -175,9 +177,8 @@ def priority_queue_using_2d_initialize():
         # now let us find the index position where maximum value are.
         tvMaxPriorityValueIndex = 0
         tvMaxPriorityValue = tvMaxOfMaxValueList[0]
-        tvMaxValue = tvMaxOfMaxValueList[0]
         for index in range(1, len(tvMaxOfMaxValueList)):
-            if(tvMaxOfMaxValueList[index] >= tvMaxValue):
+            if(tvMaxOfMaxValueList[index] >= tvMaxPriorityValue):
                 tvMaxPriorityValueIndex = index
                 tvMaxPriorityValue = tvMaxOfMaxValueList[index]
 
@@ -188,11 +189,7 @@ def priority_queue_using_2d_initialize():
         tvColumnIndex = gRowIndexToLengthMap[tvMaxPriorityValueIndex] - 1
         gProcessGrid[tvMaxPriorityValueIndex, tvColumnIndex] = 0
 
-
-        tvCurrentLength = gRowIndexToLengthMap[tvMaxPriorityValueIndex]
-        tvUpdatedLength = tvCurrentLength - 1
-        gRowIndexToLengthMap[tvMaxPriorityValueIndex] = tvUpdatedLength
-
+        gRowIndexToLengthMap[tvMaxPriorityValueIndex] = gRowIndexToLengthMap[tvMaxPriorityValueIndex] - 1
 
         print(gProcessGrid)
         print(gRowIndexToLengthMap)
@@ -206,15 +203,18 @@ def priority_queue_using_2d_initialize():
 
 
 
+
+
 ##################################################################################################
 ###################################___ main ___###################################################
 ##################################################################################################
 print("Started Successfully")
-# priority_queue_using_2d_initialize()
+priority_queue_using_2d_initialize()
 
 tvInputList = [5, 10, 20, 30, 40, 50]
+tvLength = len(tvInputList)
 tvValue = 70
-tvOutIndex = binary_search_for_finding_index(tvInputList, 0, len(tvInputList), tvValue)
+tvOutIndex = binary_search_for_finding_index(tvInputList, 0, tvLength-1, tvValue)
 print(tvOutIndex)
 
 print("Completed Successfully")
