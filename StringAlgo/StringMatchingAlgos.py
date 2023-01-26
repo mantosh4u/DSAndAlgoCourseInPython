@@ -1,4 +1,9 @@
-""" Stirng matching related alogrithms learning and implementations. """
+# Stirng matching related alogrithms learning and implementations.
+
+
+import os
+from pathlib import Path
+from os import path
 
 
 
@@ -163,8 +168,14 @@ def rabincarp_stringmatch(fvText, fvPattern):
 tvTextList    = ["abcabaabcabac", "aaa", "which finally halts.  at that point"]
 tvPatternList = ["abac", "aa", "at that"]
 
-# read some file and see how these search works.
-txtFilePath = "inputText.txt"
+# read some file text into memory which is present in the same directory where 
+# current python file resides.
+tvPath = Path(__file__)
+
+txtFileName = "inputText.txt"
+tvTextFromFile  = ""
+txtFilePath = path.join(tvPath.parent, txtFileName)
+
 tvTextFromFile  = ""
 with open(txtFilePath, "r") as fHandle:
     tvTextFromFile = fHandle.read()
@@ -203,4 +214,6 @@ for i in range(0, len(tvTextList)):
 
 
     
-print("Exited!!!")
+print("Completed Successfully")
+
+
