@@ -138,5 +138,18 @@ class Tree:
 
 
 tvRootTree = Tree(5)
+tvLeftChild = Tree(3)
+tvRightChild = Tree(8)
+
+tvRootTree.left = tvLeftChild
+tvRootTree.right = tvRightChild
+
+operationList = [tvRootTree.inorder(), tvRootTree.preorder(), tvRootTree.postorder(), \
+                tvRootTree.find(20), tvRootTree.find(3), \
+                tvRootTree.minvalue(), tvRootTree.maxvalue()]
+
+for singleOperation in operationList:
+    print(operationList)
+    break
 
 print("Completed Successfully")
