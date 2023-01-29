@@ -80,6 +80,27 @@ class Tree:
                     [self.value] )
 
 
+    # make current node empty.
+    def makeempty(self):
+        self.value = None
+        self.left = None
+        self.right = None
+        return
+
+
+    # make current node assign all which is present in right side of node.
+    def copyright(self):
+        self.value = self.right.value
+        self.left  = self.right.left
+        self.right = self.right.right
+
+    # make current node assign all which is present in left side of node.
+    def copyleft(self):
+        self.value = self.left.value
+        self.right = self.left.right
+        self.left  = self.left.left
+
+
     # check if value v occurs in a tree
     def find(self, v):
         if(self.isempty()):
@@ -110,18 +131,75 @@ class Tree:
             return(self.right.maxvalue())
 
 
-    # find the positon of the v if it would have already be in the tree.
-    # thats the place it should be kept/insert.
     def insert(self,v):
-        pass
+        """ Find the positon of the v if it would have already be in the tree.
+        thats the place it should be kept/insert. """
+
+        # If current tree is empty and we call insert. 
+        if self.isempty():
+            self.value = v
+            self.left = Tree()
+            self.right = Tree()
+        
+        # if value which needs to be inserted is already present. do nothing.
+        if self.value == v:
+            return
+        
+        # if value which needs to be inserted is smaller than current node value.
+        if(v < self.value):
+            self.left.insert(v)
+            return
+        
+        # if value which needs to be inserted is greated than current node value.
+        if(v > self.value):
+            self.right.insert(v)
+            return
     
 
-    # find if it exists in the treee and in case found delete it.
-    # but after deleting it, we need to rebalance it.
+    
+
+
     def delete(self, v):
-        pass
+        """ Find if it exists in the treee and in case found delete it. but after deleting 
+        it, we need to rebalance it."""
+    
+        # If current tree is empty and we call delete, do nothing.
+        if self.isempty():
+            return
 
+        # If value which needs to be deleted is smaller than current node value.
+        if(v < self.value):
+            self.left.delete(v)
+            return
+        
+        # If value which needs to be deleted is greated than current node value.
+        if(v > self.value):
+            self.right.delete(v)
+            return
 
+        # If value is found, then we need to handle it more carefully and all cases should
+        # be covered.
+        if(v == self.value):
+            # if current node is leaf node, then just delete is
+            if(self.isleaf()):
+                self.makeempty()
+            
+            # if current node is non leaf node with just right child presence.
+            elif(self.left.isempty()):
+                self.copyright()
+            
+            # if current node is non leaf node with just left child presence.
+            elif(self.right.isempty()):
+                self.copyleft()
+            
+            # if current node is non leaf node with both right and left child presence. Find the maximum value
+            # in the left subtree region and keep it here. And now delete that particular node form the left
+            # subtree regions.
+            else:
+                self.value = self.left.maxvalue()
+                self.left.delete(self.left.maxvalue())
+
+            return
 
 
 
@@ -137,19 +215,40 @@ class Tree:
 ####################################################################################
 
 
-tvRootTree = Tree(5)
-tvLeftChild = Tree(3)
-tvRightChild = Tree(8)
+# tvRootTree = Tree(5)
+# tvLeftChild = Tree(3)
+# tvRightChild = Tree(8)
 
-tvRootTree.left = tvLeftChild
-tvRootTree.right = tvRightChild
+# tvRootTree.left = tvLeftChild
+# tvRootTree.right = tvRightChild
 
-operationList = [tvRootTree.inorder(), tvRootTree.preorder(), tvRootTree.postorder(), \
-                tvRootTree.find(20), tvRootTree.find(3), \
-                tvRootTree.minvalue(), tvRootTree.maxvalue()]
+# operationList = [tvRootTree.inorder(), tvRootTree.preorder(), tvRootTree.postorder(), \
+#                 tvRootTree.find(20), tvRootTree.find(3), \
+#                 tvRootTree.minvalue(), tvRootTree.maxvalue()]
 
-for singleOperation in operationList:
-    print(operationList)
-    break
+# for singleOperation in operationList:
+#     print(operationList)
+#     break
+
+
+# Create empty tree
+tvRoot = Tree()
+
+tvInputList = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 28, 0, 6, 44, -1]
+for item in tvInputList:
+    tvRoot.insert(item)
+
+# sorted sequence in ascending order
+print(tvRoot.inorder())
+# print min value
+print(tvRoot.minvalue())
+# print max value
+print(tvRoot.maxvalue())
+
+# lets us delete max and min value and then print the sorted sequence.
+tvRoot.delete(tvRoot.maxvalue())
+tvRoot.delete(tvRoot.minvalue())
+
+print(tvRoot.inorder())
 
 print("Completed Successfully")
