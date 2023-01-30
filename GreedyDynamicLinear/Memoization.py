@@ -47,7 +47,7 @@ def memoization_fib(n):
         if n <= 1:
             value = n
         else:
-            value = fib(n-1) + fib(n-2)
+            value = memoization_fib(n-1) + memoization_fib(n-2)
         
         gFibTable[n] = value
     
@@ -58,15 +58,16 @@ def memoization_fib(n):
 
 
 
+
 ####################################################################################
 ##############################________main_________#################################
 ####################################################################################
 
-tvNumberList = [0,1,2,3,4,5,6,7,8,9,10,20,30,40]
+
+tvNumberList = [0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,100,150,200]
 tvOutputList = []
 
 for aNumber in tvNumberList:
-    # tvOutput = fib(aNumber)
     tvOutput = memoization_fib(aNumber)
     tvOutputList.append(tvOutput)
 
@@ -76,4 +77,23 @@ for i in range(len(tvNumberList)):
 print("Completed Sucessfully")
 
 
-
+# Output
+# ------
+# 0: 0
+# 1: 1
+# 2: 1
+# 3: 2
+# 4: 3
+# 5: 5
+# 6: 8
+# 7: 13
+# 8: 21
+# 9: 34
+# 10: 55
+# 20: 6765
+# 30: 832040
+# 40: 102334155
+# 50: 12586269025
+# 100: 354224848179261915075
+# 150: 9969216677189303386214405760200
+# 200: 280571172992510140037611932413038677189525
