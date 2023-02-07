@@ -30,15 +30,16 @@ def stringMatchForward(fvText, fvPattern):
     m = len(fvPattern)
 
     for tI in range(0, n-m+1):
+        tvMatchLength = 0
         for pI in range(0, m):
             if(fvPattern[pI] == fvText[pI + tI]):
+                tvMatchLength = tvMatchLength + 1
                 continue
             else:
                 break
 
-        # check in case we really got complete match by checking out pI index got complete 
-        # length of pattern.
-        if(pI == (m -1) ):
+        # check in case we really got complete match by checking out tvMatchLength with pattern length.
+        if(tvMatchLength == m):
             tvPosIndexList.append(tI)
 
     return tvPosIndexList
@@ -193,6 +194,63 @@ def rabincarp_stringmatch(fvText, fvPattern):
 
 
 
+# knuth-morris-pratt(kmp) string matching algorithm
+# KMP algorithms can be broadlly split into two parts. One would preprocess the pattern
+# and store into an array. This array would be used in second parts to skip or go forward
+# while matching between text and pattern.
+
+def compute_prefixtable_for_kmp(fvPattern):
+    """ compute_prefixtable_for_kmp """
+
+    m = len(fvPattern)
+    tvPiList = []
+    for i in range(m):
+        tvPiList.append(0)
+
+    tvK = 0
+    for tvQ in range(1, m):
+        # Below logic is to rest the tvK value to 0 in case next string is different one.
+        while (tvK > 0 and fvPattern[tvK] != fvPattern[tvQ]):
+            tvK = tvPiList[tvK]
+        # In case current char matches with previous one, we increase 'tvK' by 1.
+        if (tvPattern[tvK] == tvPattern[tvQ]):
+            tvK = tvK + 1
+        # set the value for current processing char 'fvPattern[tvQ]'
+        tvPiList[tvQ] = tvK
+
+    return tvPiList
+
+
+
+
+def kmp_stringmatch(fvText, fvPattern):
+    """ kmp_stringmatch """
+
+    tvPosIndexList = []
+    n = len(fvText)
+    m = len(fvPattern)
+
+    tvPiList = compute_prefixtable_for_kmp(fvPattern)
+
+    # number of char matched
+    tvQ = 0
+    # scan from left to right
+    for tI in range(n):
+        while (tvQ > 0 and fvPattern[tvQ] != fvText[tI]):
+            tvQ = tvPiList[tvQ]
+        # In case pattern and text matches increment the tvQ length.
+        if(fvPattern[tvQ] == fvText[tI]):
+            tvQ = tvQ + 1
+        # now check in case we have complete match found.
+        if(tvQ == m):
+            # Need to capture the starting index. shift accordingly and then store in list.
+            tvPosIndexList.append( (tI-m) + 1 )
+            # Adjust tvQ by 1 as it denotes length and we need to use it as index.
+            tvQ = tvPiList[tvQ - 1]
+
+    return tvPosIndexList
+
+
 
 
 
@@ -207,6 +265,7 @@ def rabincarp_stringmatch(fvText, fvPattern):
 
 tvTextList    = ["bananamania","abcabaabcabac", "aaa", "which finally halts.  at that point"]
 tvPatternList = ["bulk", "abac", "aa", "at that"]
+
 
 # read some file text into memory which is present in the same directory where 
 # current python file resides.
@@ -226,7 +285,7 @@ if(len(tvTextFromFile)> 0):
     tvPatternList.append("friendship")
 
 
-for i in range(3, len(tvTextList)):
+for i in range(0, len(tvTextList)):
     tvText = tvTextList[i]
     tvPattern = tvPatternList[i]
 
@@ -251,6 +310,17 @@ for i in range(3, len(tvTextList)):
     tvrabinCarpPosIndexList = []
     tvrabinCarpPosIndexList = rabincarp_stringmatch(tvText, tvPattern)
     print(tvrabinCarpPosIndexList)
+
+
+    tvKMPPosIndexList = []
+    tvKMPPosIndexList = kmp_stringmatch(tvText, tvPattern)
+    print(tvKMPPosIndexList)
+
+
+    if( len(tvrabinCarpPosIndexList) == len(tvKMPPosIndexList) ):
+        print("Completed Successfully with " + str(len(tvKMPPosIndexList)) + " search")
+    else:
+        print("Problem in implementation")
 
 
 print("Completed Successfully")
