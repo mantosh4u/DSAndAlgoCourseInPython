@@ -128,22 +128,58 @@ def find_common_subwords_dynamic_approach(fvFirst, fvSecond):
 
 
 
+
+def find_common_subsequence_dynamic_approach(fvFirst, fvSecond):
+    """ find_common_subsequence_dynamic_approach. When char are
+    equals then we need to define like LCS(i,j) = 1 + LCS(i+1, j+1).
+    else LCS(i,j) = max(LCS(i+1,j) + LCS(i, j+1))"""
+
+    tvFirstLen = len(fvFirst)
+    tvSecondLen = len(fvSecond)
+
+    # intialize tvMatrix matrix with tvFirstLen+1 & tvSecondLen+1 length with zero values.
+    tvMatrix = np.zeros(shape=(tvFirstLen+1,tvSecondLen+1), dtype=int)
+
+    (tvRows, tvCols) = tvMatrix.shape
+    for colIndex in range(tvCols-2, -1, -1):
+        for rowIndex in range(tvRows-2, -1, -1):
+            # Based on inductive 
+            if(fvFirst[rowIndex] == fvSecond[colIndex]):
+                tvMatrix[rowIndex, colIndex] = 1 + tvMatrix[rowIndex+1, colIndex+1]
+            else:
+                tvMatrix[rowIndex, colIndex] = max( tvMatrix[rowIndex+1, colIndex], tvMatrix[rowIndex, colIndex+1])
+
+    print(tvMatrix)          
+    return int(tvMatrix[0][0])
+
+
+
+
+
+
 ####################################################################################
 ##############################________main_________#################################
 ####################################################################################
 
 
-
-# tvFirst  = "bisect"
-# tvSecond = "secret"
-tvFirst  = "director"
-tvSecond = "secretary"
+tvFirst  = "abcd"
+tvSecond = "becd"
+# tvFirst  = "director"
+# tvSecond = "secretary"
 tvCommonSubWordsList = find_common_subwords_bruteforce(tvFirst, tvSecond)
-print(str(tvCommonSubWordsList) + " common in " + tvFirst +  " and " + tvSecond + " word")
+print(str(tvCommonSubWordsList) + " common words in " + tvFirst +  " and " + tvSecond + " word")
 
 
 tvCommonSubWordsDynamicApproachList = find_common_subwords_dynamic_approach(tvFirst, tvSecond)
-print(str(tvCommonSubWordsDynamicApproachList) + " common in " + tvFirst +  " and " + tvSecond + " word")
+print(str(tvCommonSubWordsDynamicApproachList) + " common words in " + tvFirst +  " and " + tvSecond + " word")
+
+
+tvCommonSubWordsDynamicApproachList = find_common_subwords_dynamic_approach(tvFirst, tvSecond)
+print(str(tvCommonSubWordsDynamicApproachList) + " common words in " + tvFirst +  " and " + tvSecond + " word")
+
+
+tvOutput = find_common_subsequence_dynamic_approach(tvFirst, tvSecond)
+print(str(tvOutput) + " common subsquence index position(3,3) " + tvFirst +  " and " + tvSecond + " word")
+
 
 print("Completed Sucessfully")
-
