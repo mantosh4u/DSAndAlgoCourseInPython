@@ -12,3 +12,18 @@
 
 
 
+# XOR:The XOR operator outputs a 1 whenever the inputs do not match, which occurs when 
+# one of the two inputs is exclusively true.
+
+# 0 XOR 0 = 0
+# 0 XOR 1 = 1
+# 1 XOR 0 = 1
+# 1 XOR 1 = 0
+
+# OR: The OR operator is also known as logical disjunction. It outputs a 1 whenever one or more of 
+# its inputs are 1. Here is the truth table:
+# 0 OR 0 = 0
+# 0 OR 1 = 1
+# 1 OR 0 = 1
+# 1 OR 1 = 1
+
