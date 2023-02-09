@@ -17,35 +17,152 @@ import string
 
 
 
-def julius_shiftciphers_enrcypt(fvPlainText, fvEncyptionKey):
-    "julius_shiftciphers_enrcypt"
+# def julius_shiftciphers_enrcypt(fvPlainText, fvEncyptionKey):
+#     "julius_shiftciphers_enrcypt"
+
+#     tvCryptText = ""
+
+#     for tI in range(len(fvPlainText)):
+#         try:
+#             tvCryptChar = fvEncyptionKey[fvPlainText[tI]]
+#         except KeyError as e:
+#             tvCryptChar = fvPlainText[tI]
+#             pass
+#         tvCryptText = tvCryptText + tvCryptChar
+
+#     return tvCryptText
+
+
+
+
+# def julius_shiftciphers_decrcypt(fvCryptText, fvEncyptionKey):
+#     "julius_shiftciphers_decrcypt"
+
+#     tvPlainText = ""
+
+#     for tI in range(len(fvCryptText)):
+#         try:
+#             tvPlainChar = fvEncyptionKey[fvCryptText[tI]]
+#         except KeyError as e:
+#             tvPlainChar = fvCryptText[tI]
+#             pass
+#         tvPlainText = tvPlainText + tvPlainChar
+
+#     return tvPlainText
+
+
+
+
+
+
+
+# ####################################################################################
+# ##############################________main_________#################################
+# ####################################################################################
+
+
+# tvCharList   = list(string.ascii_lowercase)
+# tvShiftVal = 3
+
+
+# tvEncryptDic = {}
+# for tI in range(len(tvCharList) - tvShiftVal):
+#     tvEncryptDic[tvCharList[tI]] = tvCharList[tI+tvShiftVal]
+
+# for tJ in range(tvShiftVal):
+#     tI = tI + 1
+#     tvEncryptDic[tvCharList[tI]] = tvCharList[tJ]
+    
+
+# tvPlaintText = "send me a hundred more soldiers"
+# tvCryptText = julius_shiftciphers_enrcypt(tvPlaintText, tvEncryptDic)
+# print(tvCryptText)
+
+
+
+# tvDecryptDic = {}
+# for tI in range((len(tvCharList) - 1), -1, -1):
+#     tvDecryptDic[tvCharList[tI]] = tvCharList[tI-tvShiftVal]
+
+# tvDecrytPlainText = julius_shiftciphers_decrcypt(tvCryptText, tvDecryptDic)
+# print(tvDecrytPlainText)
+
+# if(tvPlaintText == tvDecrytPlainText):
+#     print("Algorithms seems to be implemented correctly")
+
+
+# print("Completed Sucessfully")
+
+
+
+
+class ShiftCipherEncryptDecrypt:
+    """ ShiftCipherEncryptDecrypt Basic class."""
+
+    shiftValue  = 3
+
+    def __init__(self):
+        self.mvCharList = list(string.ascii_lowercase)
+
+    def encrypt(self, fvChar):
+        tvCryptChar    = fvChar
+        tvCharIndexPos = None
+        
+        try:
+            tvCharIndexPos = self.mvCharList.index(fvChar)
+        except ValueError as e:
+            pass
+        
+        if(tvCharIndexPos != None):
+            tvShiftVal = ShiftCipherEncryptDecrypt.shiftValue
+            tvCharSetLen = len(self.mvCharList)
+            tvCryptChar = self.mvCharList[(tvCharIndexPos + tvShiftVal) % tvCharSetLen]
+        
+        return tvCryptChar
+    
+
+    def decrypt(self, fvCryptChar):
+        tvPlainChar = fvCryptChar
+        tvCharIndexPos = None
+
+        try:
+            tvCharIndexPos = self.mvCharList.index(fvCryptChar)
+        except ValueError as e:
+            pass
+
+        if(tvCharIndexPos != None):
+            tvShiftVal = ShiftCipherEncryptDecrypt.shiftValue
+            tvCharSetLen = len(self.mvCharList)
+            tvPlainChar = self.mvCharList[(tvCharIndexPos- tvShiftVal) % tvCharSetLen]
+        
+        return tvPlainChar
+
+
+
+
+
+def julius_shiftciphers_enrcypt(fvPlainText):
+    """ julius_shiftciphers_enrcypt """
 
     tvCryptText = ""
+    tvEncrypt = ShiftCipherEncryptDecrypt()
 
     for tI in range(len(fvPlainText)):
-        try:
-            tvCryptChar = fvEncyptionKey[fvPlainText[tI]]
-        except KeyError as e:
-            tvCryptChar = fvPlainText[tI]
-            pass
+        tvCryptChar = tvEncrypt.encrypt(fvPlainText[tI])
         tvCryptText = tvCryptText + tvCryptChar
-
     return tvCryptText
 
 
 
 
-def julius_shiftciphers_decrcypt(fvCryptText, fvEncyptionKey):
-    "julius_shiftciphers_decrcypt"
+def julius_shiftciphers_decrcypt(fvCryptText):
+    """ julius_shiftciphers_decrcypt """
 
     tvPlainText = ""
+    tvDecrypt = ShiftCipherEncryptDecrypt()
 
     for tI in range(len(fvCryptText)):
-        try:
-            tvPlainChar = fvEncyptionKey[fvCryptText[tI]]
-        except KeyError as e:
-            tvPlainChar = fvCryptText[tI]
-            pass
+        tvPlainChar = tvDecrypt.decrypt(fvCryptText[tI])
         tvPlainText = tvPlainText + tvPlainChar
 
     return tvPlainText
@@ -57,43 +174,26 @@ def julius_shiftciphers_decrcypt(fvCryptText, fvEncyptionKey):
 
 
 
-
-####################################################################################
-##############################________main_________#################################
-####################################################################################
-
-
-tvCharList   = list(string.ascii_lowercase)
-tvShiftVal = 3
-
-
-tvEncryptDic = {}
-for tI in range(len(tvCharList) - tvShiftVal):
-    tvEncryptDic[tvCharList[tI]] = tvCharList[tI+tvShiftVal]
-
-for tJ in range(tvShiftVal):
-    tI = tI + 1
-    tvEncryptDic[tvCharList[tI]] = tvCharList[tJ]
-    
+# ####################################################################################
+# ##############################________main_________#################################
+# ####################################################################################
 
 tvPlaintText = "send me a hundred more soldiers"
-tvCryptText = julius_shiftciphers_enrcypt(tvPlaintText, tvEncryptDic)
+tvCryptText = julius_shiftciphers_enrcypt(tvPlaintText)
 print(tvCryptText)
 
 
-
-tvDecryptDic = {}
-for tI in range((len(tvCharList) - 1), -1, -1):
-    tvDecryptDic[tvCharList[tI]] = tvCharList[tI-tvShiftVal]
-
-tvDecrytPlainText = julius_shiftciphers_decrcypt(tvCryptText, tvDecryptDic)
+tvDecrytPlainText = julius_shiftciphers_decrcypt(tvCryptText)
 print(tvDecrytPlainText)
 
 if(tvPlaintText == tvDecrytPlainText):
     print("Algorithms seems to be implemented correctly")
 
-
 print("Completed Sucessfully")
+
+
+
+
 
 
 
