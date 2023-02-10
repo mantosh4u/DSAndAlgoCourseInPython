@@ -72,6 +72,43 @@ def find_sencondlargestvalue(fvInputList):
 
 
 
+
+
+def swap_value(fvArray, mIndex, nIndex):
+    """ Swap the value in the given array/list and index positon provided."""
+    if(mIndex != nIndex):
+        mVal = fvArray[mIndex]
+        nVal = fvArray[nIndex]
+        fvArray[mIndex] = nVal
+        fvArray[nIndex] = mVal
+
+
+
+
+# Double Pointer Approach Methodolgy
+# ----------------------------------
+
+def reverse_array_inplace(fvArray):
+    """ reverse_array_inplace """
+
+    tvLen = len(fvArray)
+
+    if(tvLen <= 1):
+        return
+    
+    tvSIndex = 0
+    tvEIndex = tvLen - 1
+
+    while(tvSIndex != tvEIndex):
+        swap_value(fvArray, tvSIndex, tvEIndex)
+        tvSIndex = tvSIndex + 1
+        tvEIndex = tvEIndex - 1
+
+
+
+
+
+
 ##############################################################################################################
 ##########################################____main____########################################################
 ##############################################################################################################
@@ -86,5 +123,8 @@ inputList = [[12, 35, 10, 34, 1], [12, 10, 5, 3], [5, 10, 10]]
 for input in inputList:
     tvSecondLargestVal = find_sencondlargestvalue(input)
     print(tvSecondLargestVal)
+
+tvInputList = [10, 20, 30, 40, 50]
+reverse_array_inplace(tvInputList)
 
 print("Completed Successfully")
