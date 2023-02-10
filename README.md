@@ -21,4 +21,13 @@ Below is high level topics which has been covered in this course.
 12. Linear Programming
 
 
+This repo should also have my implementation based on the course "NOC:Introduction to Cryptology" By  Dr. Sugata Gangopadhyay.
+
+
+Course Name: NOC:Introduction to Cryptology, IIT Roorkee 
+Instructor: Dr. Sugata Gangopadhyay
+YouTube Course Page: https://www.youtube.com/playlist?list=PLJ5C_6qdAvBH01tVf0V4PQsCxGE3hSqEr
+
+
+
 **Disclaimer**: Of course, any errors in the implementation is my responsibility.
