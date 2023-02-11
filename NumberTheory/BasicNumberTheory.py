@@ -59,6 +59,49 @@
 #   rx + sy = gcd(x,y)
 
 
+import math
+
+
+
+def isPrime(fvNumber):
+    """A prime number (or a prime) is a natural number greater than 1 that is not a 
+    product of two smaller natural numbers. The property of being prime is called 
+    primality. A simple but slow method of checking the primality of a given number
+    n, called trial division, tests whether n is a multiple of any integer between 
+    2 and sqrt(n)."""
+
+    tvSqrtVal = math.sqrt(fvNumber)
+    tvEndRange = int(math.ceil(tvSqrtVal))
+    isPrime = True
+    tI = 2
+    while tI <= tvEndRange:
+        tMod = (fvNumber % tI)
+        if(tMod == 0):
+            isPrime = False
+            break
+        tI = tI + 1
+
+    return isPrime
+
+
+
+def euclid_gcd(fvFirst, fvSecond):
+    """ euclid_gcd 
+    gcd(int a, int b)
+        if (a == b) return a;
+        if (a < b) return gcd(a, b - a);
+    """
+    
+    if(fvFirst == 0):
+        return fvSecond
+    
+    return euclid_gcd(fvSecond % fvFirst, fvFirst)
+
+
+
+
+
+
 
 
 
@@ -67,7 +110,31 @@
 # ####################################################################################
 
 
+tvNumberList = [3,4,5,6,7]
+for aNumber in tvNumberList:
+    tvOut = isPrime(aNumber)
+    print(str(aNumber) + " isPrime: " + str(tvOut))
+
+
+
+tvFirst  = 24
+tvSecond = 10
+tvGcdValue = euclid_gcd(tvFirst, tvSecond)
+print(tvGcdValue)
+
+
+# we need to solve gcd(b, 192) = 1
+tvOuputList = []
+for i in range(2, 192):
+    tvGcdValue = euclid_gcd(i, 192)
+    if(tvGcdValue == 1):
+        tvOuputList.append(i)
+
+print(tvOuputList)
+
+
+
+
 
 
 print("Completed Sucessfully")
-
